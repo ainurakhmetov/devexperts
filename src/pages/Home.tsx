@@ -6,6 +6,7 @@ import ListRowHeader from "../components/listRowHeader";
 import ListRow from "../components/listRow";
 import Header from "../components/layout/Header";
 import {useFetchCompanies} from "../hooks/useFetchCompanies";
+import Loader from "../components/Loader";
 
 const StyledHome = styled.div`
     margin: 50px auto;
@@ -13,17 +14,21 @@ const StyledHome = styled.div`
 `;
 
 const Home = () => {
-    const companiesList = useFetchCompanies();
+    const { companiesList, isLoading } = useFetchCompanies();
 
     return (
         <StyledApp>
             <Header />
-            <StyledHome>
-                <ListRowHeader />
-                {companiesList?.map((itemData) => (
-                    <ListRow itemData={itemData} key={itemData?.id} />
-                ))}
-            </StyledHome>
+            {
+                isLoading
+                ? <Loader />
+                : <StyledHome>
+                    <ListRowHeader />
+                    {companiesList?.map((itemData) => (
+                        <ListRow itemData={itemData} key={itemData?.id} />
+                    ))}
+                </StyledHome>
+            }
         </StyledApp>
     )
 }

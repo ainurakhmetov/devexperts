@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {StyledApp} from "../styles";
 import Header from "../components/layout/Header";
 import {useCompanyData} from "../hooks/useCompanyData";
+import Loader from "../components/Loader";
 
 const StyledCompanyTable = styled.div`
     display: grid;
@@ -43,36 +44,42 @@ const StyledColumnNearby = styled.div`
 
 const Company = () => {
     const { name } = useParams();
-    const { company, nearbyPlaces } = useCompanyData(name as string);
+    const { company, nearbyPlaces, isLoading } = useCompanyData(name as string);
 
     return (
         <StyledApp>
             <Header />
-            <StyledImg src={company?.image} alt={'img'} />
-            <StyledCompanyTable>
-                <StyledColumn>
-                    <StyledColumnTitle>Address</StyledColumnTitle>
-                    <StyledColumnBody>
-                        <span>{`${company?.address?.zip} ${company?.address?.street}`}</span>
-                        <span>{`${company?.address?.country}, ${company?.address?.number}`}</span>
-                    </StyledColumnBody>
-                </StyledColumn>
-                <StyledColumn>
-                    <StyledColumnTitle>Nearby Places</StyledColumnTitle>
-                    {nearbyPlaces?.map(item =>
-                        <StyledColumnNearby key={item?.id}>
-                            {item?.description}
-                        </StyledColumnNearby>
-                    )}
-                </StyledColumn>
-                <StyledColumn>
-                    <StyledColumnTitle>Contact</StyledColumnTitle>
-                    <StyledColumnBody>
-                        <span>{company?.phone}</span>
-                        <span>{company?.email}</span>
-                    </StyledColumnBody>
-                </StyledColumn>
-            </StyledCompanyTable>
+            {
+                isLoading
+                ? <Loader />
+                : <>
+                    <StyledImg src={company?.image} alt={'img'} />
+                    <StyledCompanyTable>
+                        <StyledColumn>
+                            <StyledColumnTitle>Address</StyledColumnTitle>
+                            <StyledColumnBody>
+                                <span>{`${company?.address?.zip} ${company?.address?.street}`}</span>
+                                <span>{`${company?.address?.country}, ${company?.address?.number}`}</span>
+                            </StyledColumnBody>
+                        </StyledColumn>
+                        <StyledColumn>
+                            <StyledColumnTitle>Nearby Places</StyledColumnTitle>
+                            {nearbyPlaces?.map(item =>
+                                <StyledColumnNearby key={item?.id}>
+                                    {item?.description}
+                                </StyledColumnNearby>
+                            )}
+                        </StyledColumn>
+                        <StyledColumn>
+                            <StyledColumnTitle>Contact</StyledColumnTitle>
+                            <StyledColumnBody>
+                                <span>{company?.phone}</span>
+                                <span>{company?.email}</span>
+                            </StyledColumnBody>
+                        </StyledColumn>
+                    </StyledCompanyTable>
+                </>
+            }
         </StyledApp>
     )
 }
