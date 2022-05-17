@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import styled from "styled-components";
 
 import {StyledApp} from "../styles";
-import Header from "../components/layout/Header";
+import Header from "../components/Layout/Header";
 import {useCompanyData} from "../hooks/useCompanyData";
 import Loader from "../components/Loader";
 

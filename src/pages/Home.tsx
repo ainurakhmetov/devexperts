@@ -2,9 +2,9 @@ import React from 'react';
 import styled from "styled-components";
 
 import {StyledApp} from "../styles";
-import ListRowHeader from "../components/listRowHeader";
-import ListRow from "../components/listRow";
-import Header from "../components/layout/Header";
+import ListRowHeader from "../components/ListRowHeader";
+import ListRow from "../components/ListRow";
+import Header from "../components/Layout/Header";
 import {useFetchCompanies} from "../hooks/useFetchCompanies";
 import Loader from "../components/Loader";
 
